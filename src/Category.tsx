@@ -14,21 +14,22 @@ interface State {
 interface Props {
     Name : string
     Items : ItemData[]
+    NewItemDescription : string
+    NewItemUrl : string
     OnNewItem : ((item : ItemData) => void)
+    OnDescriptionChange : ((desc : string) => void)
+    OnUrlChange : ((url : string) => void)
 }
 
-class Category extends Component<Props, State> {
-    onNewItem : ((item : ItemData) => void);
-
+class Category extends Component<Props, State> {       
     constructor(props : Props) {
         super(props);
 
         this.state = {
-            Url : '',
-            Description : '',
+            Url : props.NewItemUrl,
+            Description : props.NewItemDescription,
         }
 
-        this.onNewItem = props.OnNewItem;
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeUrl = this.onChangeUrl.bind(this);
         this.onClick = this.onClick.bind(this);
@@ -36,21 +37,15 @@ class Category extends Component<Props, State> {
 
     onClick(event : FormEvent) : void {
         event.preventDefault();        
-        this.onNewItem({ Url : this.state.Url, Description : this.state.Description });
+        this.props.OnNewItem({ Url : this.props.NewItemUrl, Description : this.props.NewItemDescription });
     }
 
     onChangeDescription(event : ChangeEvent<HTMLInputElement>) : void {        
-        this.setState({
-            Description : event.currentTarget.value,
-            Url : this.state.Url
-        });
+        this.props.OnDescriptionChange(event.currentTarget.value);            
     }
 
     onChangeUrl(event : ChangeEvent<HTMLInputElement>) : void {
-        this.setState({
-            Description : this.state.Description,
-            Url : event.currentTarget.value
-        });
+        this.props.OnUrlChange(event.currentTarget.value);        
     }
 
     render() {
@@ -66,15 +61,14 @@ class Category extends Component<Props, State> {
                     name="description" 
                     type="text" 
                     onChange={this.onChangeDescription} 
-                    value={this.state.Description} />
+                    value={this.props.NewItemDescription} />
                 <input 
                     name="url" 
                     type="text"
                     onChange={this.onChangeUrl} 
-                    value={this.state.Url} />
+                    value={this.props.NewItemUrl} />
                 <button type="button" onClick={this.onClick}>Add</button>
             </div>
-
         )        
     }
 }
