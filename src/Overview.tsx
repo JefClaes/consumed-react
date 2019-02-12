@@ -36,8 +36,8 @@ class Overview extends Component<Props, State> {
     render() {
       return (
         <div>
-          <Category Name="Books" Items={this.state.BookItems} OnNewItem={(x) => this.addBook(x)}  />
-          <Category Name="Movies" Items={this.state.MovieItems} OnNewItem={(x) => this.addMovie(x)} />
+          <Category Name="Books" Items={this.state.BookItems} OnNewItem={this.addBook}  />
+          <Category Name="Movies" Items={this.state.MovieItems} OnNewItem={this.addMovie} />
         </div>
       );
     }
