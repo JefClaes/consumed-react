@@ -1,22 +1,16 @@
 import React, { Component } from 'react';
 import './App.css';
-import Category from "./Category";
-
-const bookItems = [
-  { Url : "bx", Description : "bX" }
-]
-const movieItems = [
-  { Url : "mx", Description : "X" },
-  { Url : "my", Description : "Y" }
-]
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import Overview from './Overview';
 
 class App extends Component {
   render() {
     return (
+      <Router>
       <div>
-        <Category Name="Books" Items={bookItems}  />
-        <Category Name="Movies" Items={movieItems} />
+        <Route exact path="/" component={Overview}/>        
       </div>
+      </Router>
     );
   }
 }
