@@ -9,36 +9,34 @@ interface ItemData {
 interface State {
     Url : string
     Description : string
-    Items: ItemData[]
 }
 
 interface Props {
     Name : string
     Items : ItemData[]
+    OnNewItem : ((item : ItemData) => void)
 }
 
 class Category extends Component<Props, State> {
+    onNewItem : ((item : ItemData) => void);
+
     constructor(props : Props) {
         super(props);
 
         this.state = {
             Url : '',
             Description : '',
-            Items : props.Items            
         }
 
+        this.onNewItem = props.OnNewItem;
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeUrl = this.onChangeUrl.bind(this);
         this.onClick = this.onClick.bind(this);
     }
 
     onClick(event : FormEvent) : void {
-        event.preventDefault();
-        this.setState({
-            Description : '',
-            Url : '',
-            Items : this.state.Items.concat({ Url : this.state.Url, Description : this.state.Description })
-        });
+        event.preventDefault();        
+        this.onNewItem({ Url : this.state.Url, Description : this.state.Description });
     }
 
     onChangeDescription(event : ChangeEvent<HTMLInputElement>) : void {        
@@ -56,7 +54,7 @@ class Category extends Component<Props, State> {
     }
 
     render() {
-        const items = this.state.Items.map((x) => 
+        const items = this.props.Items.map((x) => 
             <li key={x.Description}><Item key={x.Description} Url={x.Url} Description={x.Description} /></li>
         );
 

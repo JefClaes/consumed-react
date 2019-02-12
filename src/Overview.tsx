@@ -1,20 +1,43 @@
 import React, { Component } from 'react';
 import Category from "./Category";
 
-const bookItems = [
-    { Url : "bx", Description : "bX" }
-  ]
-  const movieItems = [
-    { Url : "mx", Description : "X" },
-    { Url : "my", Description : "Y" }
-  ]
+interface Props { }
 
-class Overview extends Component {
+interface State {
+    BookItems : any[]
+    MovieItems : any[]
+}
+
+class Overview extends Component<Props, State> {
+
+    constructor(props : Props) {
+        super(props);
+
+        this.state = {
+            BookItems : [],
+            MovieItems : []
+        }
+    }     
+
+    addBook(book : any) : void {       
+        this.setState({
+            BookItems : this.state.BookItems.concat(book),
+            MovieItems : this.state.MovieItems
+        });
+    }
+
+    addMovie(mov : any) : void {
+        this.setState({
+            BookItems : this.state.BookItems,
+            MovieItems : this.state.MovieItems.concat(mov)
+        });
+    }
+
     render() {
       return (
         <div>
-          <Category Name="Books" Items={bookItems}  />
-          <Category Name="Movies" Items={movieItems} />
+          <Category Name="Books" Items={this.state.BookItems} OnNewItem={(x) => this.addBook(x)}  />
+          <Category Name="Movies" Items={this.state.MovieItems} OnNewItem={(x) => this.addMovie(x)} />
         </div>
       );
     }
