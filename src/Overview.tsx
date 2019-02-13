@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Category from "./Category";
 import { connect } from 'react-redux';
-import { ConsumedItemsState } from './ConsumedItems/Types'
 import * as actions from './ConsumedItems/Actions'
+import { AppState } from '././AppState'
+import { ConsumedItemsState } from './ConsumedItems/Types'
 
 interface DispatchProps {
     addBook : (book : any) => void
@@ -44,9 +45,7 @@ class Overview extends Component<Props> {
     }
   }
 
-const mapStateToProps = (state : ConsumedItemsState) => ({
-...state
-});
+const mapStateToProps = ({ ConsumedItemsState } : AppState) => (ConsumedItemsState);
 const mapDispatchToProps = (dispatch : any) => ({
     addBook: (book : any) => dispatch(actions.addBook(book)),
     addMovie: (movie : any) => dispatch(actions.addMovie(movie)),

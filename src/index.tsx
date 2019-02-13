@@ -5,10 +5,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { consumedItemsReducer } from './ConsumedItems/Reducer'
 import { createHashHistory } from 'history'
-import { createStore } from 'redux'
+import { createStore, combineReducers } from 'redux'
+import { AppState } from './AppState'
 
-
-const store = createStore(consumedItemsReducer)
+const rootReducer = combineReducers<AppState>({ ConsumedItemsState : consumedItemsReducer })
+const store = createStore(rootReducer)
 
 ReactDOM.render(<App store={store}  />, document.getElementById('root'));
 
