@@ -1,77 +1,60 @@
 import React, { Component } from 'react';
 import Category from "./Category";
+import { connect } from 'react-redux';
+import { ConsumedItemsState } from './ConsumedItems/Types'
+import * as actions from './ConsumedItems/Actions'
 
-interface Props { }
-
-interface State {    
-    BookItems : any[]
-    NewBookItemUrl : string
-    NewBookItemDescription : string
-    MovieItems : any[]
-    NewMovieItemUrl : string
-    NewMovieItemDescription : string
+interface DispatchProps {
+    addBook : (book : any) => void
+    addMovie : (movie : any) => void 
+    changeNewMovieDesc: (desc : string) => void
+    changeNewMovieUrl : (url : string) => void
+    changeNewBookDesc : (desc : string) => void
+    changeNewBookUrl : (url : string) => void
 }
 
-class Overview extends Component<Props, State> {
+type Props = DispatchProps & ConsumedItemsState
 
+class Overview extends Component<Props> {
     constructor(props : Props) {
         super(props);
-
-        this.state = {
-            BookItems : [],
-            NewBookItemDescription : '',
-            NewBookItemUrl : '',
-            MovieItems : [],            
-            NewMovieItemDescription : '',
-            NewMovieItemUrl : ''
-        }
-
     }     
-
-    addBook (book : any) : void {       
-        this.setState({            
-            BookItems : this.state.BookItems.concat(book),
-            NewBookItemDescription : this.state.NewBookItemDescription,
-            NewBookItemUrl : this.state.NewBookItemUrl,
-            MovieItems : this.state.MovieItems,
-            NewMovieItemDescription : this.state.NewMovieItemDescription,
-            NewMovieItemUrl : this.state.NewMovieItemUrl
-        });
-    }    
-
-    addMovie (mov : any) : void {
-        this.setState({
-            BookItems : this.state.BookItems,
-            NewBookItemDescription : this.state.NewBookItemDescription,
-            NewBookItemUrl : this.state.NewBookItemUrl,
-            MovieItems : this.state.MovieItems.concat(mov),
-            NewMovieItemDescription : this.state.NewMovieItemDescription,
-            NewMovieItemUrl : this.state.NewMovieItemUrl
-        });
-    }
 
     render() {
       return (
         <div>
           <Category 
             Name="Books" 
-            Items={this.state.BookItems} 
-            NewItemDescription={this.state.NewBookItemDescription}
-            NewItemUrl={this.state.NewBookItemUrl}
-            OnNewItem={(book) => this.addBook(book)} 
-            OnDescriptionChange={(desc) => this.setState((current) => ({...current, NewBookItemDescription : desc }))} 
-            OnUrlChange={(url) => this.setState((current) => ({...current, NewBookItemUrl : url }))} />
+            Items={this.props.BookItems} 
+            NewItemDescription={this.props.NewBookItemDescription}
+            NewItemUrl={this.props.NewBookItemUrl}
+            OnNewItem={(book) => { this.props.addBook(book) }} 
+            OnDescriptionChange={(desc) => { this.props.changeNewBookDesc(desc) }} 
+            OnUrlChange={(url) => { this.props.changeNewBookUrl(url) }} />
           <Category 
             Name="Movies" 
-            Items={this.state.MovieItems} 
-            NewItemDescription={this.state.NewMovieItemDescription}
-            NewItemUrl={this.state.NewMovieItemUrl}
-            OnNewItem={(movie) => this.addMovie(movie)} 
-            OnDescriptionChange={(desc) => this.setState((current) => ({...current, NewMovieItemDescription : desc }))} 
-            OnUrlChange={(url) => this.setState((current) => ({...current, NewMovieItemUrl : url }))} />
+            Items={this.props.MovieItems} 
+            NewItemDescription={this.props.NewMovieItemDescription}
+            NewItemUrl={this.props.NewMovieItemUrl}
+            OnNewItem={(movie) => { this.props.addMovie(movie) }} 
+            OnDescriptionChange={(desc) => { this.props.changeNewMovieDesc(desc) }} 
+            OnUrlChange={(url) => { this.props.changeNewMovieUrl(url) }} />
         </div>
       );
     }
   }
 
-export default Overview;
+const mapStateToProps = (state : ConsumedItemsState) => ({
+...state
+});
+const mapDispatchToProps = (dispatch : any) => ({
+    addBook: (book : any) => dispatch(actions.addBook(book)),
+    addMovie: (movie : any) => dispatch(actions.addMovie(movie)),
+    changeNewMovieDesc: (desc : string) => dispatch(actions.changeNewMovieDesc(desc)),
+    changeNewMovieUrl : (url : string) => dispatch(actions.changeNewMovieUrl(url)),
+    changeNewBookDesc : (desc : string) => dispatch(actions.changeNewBookDesc(desc)),
+    changeNewBookUrl : (url : string) => dispatch(actions.changeNewBookUrl(url))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Overview);
+
