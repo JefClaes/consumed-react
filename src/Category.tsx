@@ -16,12 +16,12 @@ interface Props {
     Items : ItemData[]
     NewItemDescription : string
     NewItemUrl : string
-    OnNewItem : ((item : ItemData) => void)
+    OnNewItem : ((desc : string, url : string) => void)
     OnDescriptionChange : ((desc : string) => void)
     OnUrlChange : ((url : string) => void)
 }
 
-class Category extends Component<Props, State> {       
+export class Category extends Component<Props, State> {       
     constructor(props : Props) {
         super(props);
 
@@ -37,7 +37,7 @@ class Category extends Component<Props, State> {
 
     onClick(event : FormEvent) : void {
         event.preventDefault();        
-        this.props.OnNewItem({ Url : this.props.NewItemUrl, Description : this.props.NewItemDescription });
+        this.props.OnNewItem(this.props.NewItemDescription, this.props.NewItemUrl);
     }
 
     onChangeDescription(event : ChangeEvent<HTMLInputElement>) : void {        
@@ -72,5 +72,3 @@ class Category extends Component<Props, State> {
         )        
     }
 }
-
-export default Category;

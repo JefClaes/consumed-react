@@ -7,11 +7,16 @@ export enum ConsumedItemsActionTypes {
     CHANGE_NEW_MOVIE_URL = 'CHANGE_NEW_MOVIE_URL',
 }
 
+export interface ItemData {
+    Description : string
+    Url : string
+}
+
 export interface ConsumedItemsState {
-    BookItems : any[]
+    BookItems : ItemData[]
     NewBookItemUrl : string
     NewBookItemDescription : string
-    MovieItems : any[]
+    MovieItems : ItemData[]
     NewMovieItemUrl : string
     NewMovieItemDescription : string
 }

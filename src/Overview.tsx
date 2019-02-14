@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import Category from "./Category";
+import { Category } from "./Category";
 import { connect } from 'react-redux';
 import * as actions from './ConsumedItems/Actions'
 import { AppState } from '././AppState'
-import { ConsumedItemsState } from './ConsumedItems/Types'
+import { ConsumedItemsState, ItemData } from './ConsumedItems/Types'
 
 interface DispatchProps {
-    addBook : (book : any) => void
-    addMovie : (movie : any) => void 
+    addBook : (book : ItemData) => void
+    addMovie : (movie : ItemData) => void 
     changeNewMovieDesc: (desc : string) => void
     changeNewMovieUrl : (url : string) => void
     changeNewBookDesc : (desc : string) => void
@@ -29,7 +29,7 @@ class Overview extends Component<Props> {
             Items={this.props.BookItems} 
             NewItemDescription={this.props.NewBookItemDescription}
             NewItemUrl={this.props.NewBookItemUrl}
-            OnNewItem={(book) => { this.props.addBook(book) }} 
+            OnNewItem={(desc, url) => { this.props.addBook({ Description: desc, Url : url}) }} 
             OnDescriptionChange={(desc) => { this.props.changeNewBookDesc(desc) }} 
             OnUrlChange={(url) => { this.props.changeNewBookUrl(url) }} />
           <Category 
@@ -37,7 +37,7 @@ class Overview extends Component<Props> {
             Items={this.props.MovieItems} 
             NewItemDescription={this.props.NewMovieItemDescription}
             NewItemUrl={this.props.NewMovieItemUrl}
-            OnNewItem={(movie) => { this.props.addMovie(movie) }} 
+            OnNewItem={(desc, url) => { this.props.addMovie({ Description: desc, Url : url}) }} 
             OnDescriptionChange={(desc) => { this.props.changeNewMovieDesc(desc) }} 
             OnUrlChange={(url) => { this.props.changeNewMovieUrl(url) }} />
         </div>
@@ -47,8 +47,8 @@ class Overview extends Component<Props> {
 
 const mapStateToProps = ({ ConsumedItemsState } : AppState) => (ConsumedItemsState);
 const mapDispatchToProps = (dispatch : any) => ({
-    addBook: (book : any) => dispatch(actions.addBook(book)),
-    addMovie: (movie : any) => dispatch(actions.addMovie(movie)),
+    addBook: (book : ItemData) => dispatch(actions.addBook(book)),
+    addMovie: (movie : ItemData) => dispatch(actions.addMovie(movie)),
     changeNewMovieDesc: (desc : string) => dispatch(actions.changeNewMovieDesc(desc)),
     changeNewMovieUrl : (url : string) => dispatch(actions.changeNewMovieUrl(url)),
     changeNewBookDesc : (desc : string) => dispatch(actions.changeNewBookDesc(desc)),
