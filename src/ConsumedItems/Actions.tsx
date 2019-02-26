@@ -1,9 +1,14 @@
 import { action } from 'typesafe-actions'
-import { ConsumedItemsActionTypes } from './Types'
 
-export const addBook = (item : any) => action(ConsumedItemsActionTypes.ADD_BOOK, item)
-export const addMovie = (item : any) => action(ConsumedItemsActionTypes.ADD_MOVIE, item)
-export const changeNewMovieDesc = (desc : string) => action(ConsumedItemsActionTypes.CHANGE_NEW_MOVIE_DESC, desc)
-export const changeNewMovieUrl = (url : string) => action(ConsumedItemsActionTypes.CHANGE_NEW_MOVIE_URL, url)
-export const changeNewBookDesc = (desc : string) => action(ConsumedItemsActionTypes.CHANGE_NEW_BOOK_DESC, desc)
-export const changeNewBookUrl = (url : string) => action(ConsumedItemsActionTypes.CHANGE_NEW_BOOK_URL, url)
+export enum ConsumedItemsActionTypes {
+    ADD_ITEM_TO_CATEGORY = 'ADD_ITEM_TO_CATEGORY',
+    CHANGE_NEW_ITEM_DESC = 'CHANGE_NEW_ITEM_DESC',
+    CHANGE_NEW_ITEM_URL = 'CHANGE_NEW_ITEM_URL'   
+}
+
+export const addItemToCategory = (cat : string, item : any) => 
+    action(ConsumedItemsActionTypes.ADD_ITEM_TO_CATEGORY, { cat: cat, val: item })
+export const changeNewItemUrl = (cat : string, url : string) => 
+    action(ConsumedItemsActionTypes.CHANGE_NEW_ITEM_URL, { cat: cat, val: url })
+export const changeNewItemDesc = (cat : string, desc : string) => 
+    action(ConsumedItemsActionTypes.CHANGE_NEW_ITEM_DESC, { cat: cat, val: desc })

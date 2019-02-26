@@ -4,7 +4,6 @@ import Overview from './Overview'
 import './App.css'
 import { Provider, connect } from 'react-redux'
 import { Store } from 'redux'
-import { ConsumedItemsState } from './ConsumedItems/Types';
 import { AppState } from './AppState'
 
 interface Props {

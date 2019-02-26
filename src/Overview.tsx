@@ -6,12 +6,9 @@ import { AppState } from '././AppState'
 import { ConsumedItemsState, ItemData } from './ConsumedItems/Types'
 
 interface DispatchProps {
-    addBook : (book : ItemData) => void
-    addMovie : (movie : ItemData) => void 
-    changeNewMovieDesc: (desc : string) => void
-    changeNewMovieUrl : (url : string) => void
-    changeNewBookDesc : (desc : string) => void
-    changeNewBookUrl : (url : string) => void
+    addItem : (cat: string, item : ItemData) => void
+    changeNewItemUrl : (cat : string, url : string) => void
+    changeNewItemDesc : (cat : string, desc : string) => void
 }
 
 type Props = DispatchProps & ConsumedItemsState
@@ -22,37 +19,28 @@ class Overview extends Component<Props> {
     }     
 
     render() {
+      const items = this.props.Categories.map((category) => 
+        <Category 
+          Name={category.Description}
+          Items={category.Items} 
+          NewItemDescription={category.NewItemDescription}
+          NewItemUrl={category.NewItemUrl}
+          OnNewItem={(desc, url) => { this.props.addItem(category.Description, { Description: desc, Url : url }) }} 
+          OnDescriptionChange={(desc) => { this.props.changeNewItemDesc(category.Description, desc) }} 
+          OnUrlChange={(url) => { this.props.changeNewItemUrl(category.Description, url) }} />
+      );
+
       return (
-        <div>
-          <Category 
-            Name="Books" 
-            Items={this.props.BookItems} 
-            NewItemDescription={this.props.NewBookItemDescription}
-            NewItemUrl={this.props.NewBookItemUrl}
-            OnNewItem={(desc, url) => { this.props.addBook({ Description: desc, Url : url}) }} 
-            OnDescriptionChange={(desc) => { this.props.changeNewBookDesc(desc) }} 
-            OnUrlChange={(url) => { this.props.changeNewBookUrl(url) }} />
-          <Category 
-            Name="Movies" 
-            Items={this.props.MovieItems} 
-            NewItemDescription={this.props.NewMovieItemDescription}
-            NewItemUrl={this.props.NewMovieItemUrl}
-            OnNewItem={(desc, url) => { this.props.addMovie({ Description: desc, Url : url}) }} 
-            OnDescriptionChange={(desc) => { this.props.changeNewMovieDesc(desc) }} 
-            OnUrlChange={(url) => { this.props.changeNewMovieUrl(url) }} />
-        </div>
+        <div>{items}</div>
       );
     }
   }
 
 const mapStateToProps = ({ ConsumedItemsState } : AppState) => (ConsumedItemsState);
 const mapDispatchToProps = (dispatch : any) => ({
-    addBook: (book : ItemData) => dispatch(actions.addBook(book)),
-    addMovie: (movie : ItemData) => dispatch(actions.addMovie(movie)),
-    changeNewMovieDesc: (desc : string) => dispatch(actions.changeNewMovieDesc(desc)),
-    changeNewMovieUrl : (url : string) => dispatch(actions.changeNewMovieUrl(url)),
-    changeNewBookDesc : (desc : string) => dispatch(actions.changeNewBookDesc(desc)),
-    changeNewBookUrl : (url : string) => dispatch(actions.changeNewBookUrl(url))
+    addItem: (cat : string, item : ItemData) => dispatch(actions.addItemToCategory(cat, item)),
+    changeNewItemUrl: (cat : string, url : string) => dispatch(actions.changeNewItemUrl(cat, url)),
+    changeNewItemDesc: (cat : string, desc : string) => dispatch(actions.changeNewItemDesc(cat, desc))    
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Overview);
