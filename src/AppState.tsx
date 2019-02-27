@@ -1,4 +1,4 @@
-import { ConsumedItemsState } from './ConsumedItems/Types'
+import { ConsumedItemsState } from './consumeditems/types'
 
 export interface AppState {
     ConsumedItemsState : ConsumedItemsState

@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { consumedItemsReducer } from './ConsumedItems/Reducer'
+import { consumedItemsReducer } from './consumeditems/reducer'
 import { createHashHistory } from 'history'
 import { createStore, combineReducers } from 'redux'
-import { AppState } from './AppState'
+import { AppState } from './appState'
 
 const rootReducer = combineReducers<AppState>({ ConsumedItemsState : consumedItemsReducer })
 const store = createStore(rootReducer)

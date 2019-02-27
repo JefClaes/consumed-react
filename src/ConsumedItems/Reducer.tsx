@@ -1,6 +1,6 @@
 import { Reducer } from 'redux'
-import { ConsumedItemsState } from './Types'
-import { ConsumedItemsActionTypes } from './Actions'
+import { ConsumedItemsState } from './types'
+import { ConsumedItemsActionTypes } from './actions'
 
 const initialState : ConsumedItemsState = {
     Categories : [

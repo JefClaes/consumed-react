@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import Overview from './Overview'
+import Overview from './components/Overview'
 import './App.css'
 import { Provider, connect } from 'react-redux'
 import { Store } from 'redux'
-import { AppState } from './AppState'
+import { AppState } from './appState'
 
 interface Props {
   store : Store<AppState>

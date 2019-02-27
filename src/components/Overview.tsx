@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Category } from "./Category";
 import { connect } from 'react-redux';
-import * as actions from './ConsumedItems/Actions'
-import { AppState } from '././AppState'
-import { ConsumedItemsState, ItemData } from './ConsumedItems/Types'
+import * as actions from '.././consumeditems/actions'
+import { ConsumedItemsState, ItemData } from '.././consumeditems/types'
+import { AppState } from '.././appState'
 
 interface DispatchProps {
     addItem : (cat: string, item : ItemData) => void
